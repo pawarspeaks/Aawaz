@@ -1,0 +1,5261 @@
+{
+  "description": "IVR",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "trigger",
+      "transitions": [
+        {
+          "event": "incomingMessage"
+        },
+        {
+          "next": "say_play_1",
+          "event": "incomingCall"
+        },
+        {
+          "event": "incomingConversationMessage"
+        },
+        {
+          "event": "incomingRequest"
+        },
+        {
+          "event": "incomingParent"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 5250,
+          "y": -1670
+        }
+      }
+    },
+    {
+      "name": "gather_input",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_key_press",
+          "event": "keypress"
+        },
+        {
+          "next": "split_Tamil_Speech_Result",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_1",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "play": "https://grullo-camel-7793.twil.io/assets/Main%20Announement.mp3",
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 4630,
+          "y": -210
+        },
+        "hints": "one,two,three,four,five,six",
+        "finish_on_key": "",
+        "language": "en-IN",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 8,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "split_key_press",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "chose_english",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.gather_input.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "chose_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "2",
+              "arguments": [
+                "{{widgets.gather_input.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "chose_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "3",
+              "arguments": [
+                "{{widgets.gather_input.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "chose_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "4",
+              "arguments": [
+                "{{widgets.gather_input.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "next": "chose_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "5",
+              "arguments": [
+                "{{widgets.gather_input.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "5"
+            }
+          ]
+        },
+        {
+          "next": "chose_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "6",
+              "arguments": [
+                "{{widgets.gather_input.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "6"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.gather_input.Digits}}",
+        "offset": {
+          "x": 4380,
+          "y": 160
+        }
+      }
+    },
+    {
+      "name": "say_play_1",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "gather_input",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "play": "https://grullo-camel-7793.twil.io/assets/English%20announcement.mp3",
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 5310,
+          "y": -860
+        },
+        "loop": 1,
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "Invalid_Input_1",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "gather_input",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 3950,
+          "y": -20
+        },
+        "loop": 1,
+        "say": "Input was invalid, please press a valid key",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "chose_english",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_on_keys",
+          "event": "keypress"
+        },
+        {
+          "next": "split_on_speech",
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_Invalid_Input_1",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": -2690,
+          "y": 1300
+        },
+        "hints": "one,two,three,four,1,2,3,4",
+        "finish_on_key": "#",
+        "say": "You have selected English language, choose what you want to do with Aawaz today, for PNR status please press one or say one, for train status press 2 or say two, for food order press 3 or say three, press 4 or say four for recent announcements on railway stations",
+        "language": "en-IN",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 7,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "chose_marathi",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_on_keys_marathi",
+          "event": "keypress"
+        },
+        {
+          "next": "split_on_speech_marathi",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_marathi_1",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "play": "https://grullo-camel-7793.twil.io/assets/Chose%20Marathi.mp3",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 3390,
+          "y": 1540
+        },
+        "loop": 1,
+        "hints": "one,1,two,2,three,3,four,4 , ek,don,teeen,chaar",
+        "finish_on_key": "#",
+        "stop_gather": true,
+        "gather_language": "en-IN",
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 15
+      }
+    },
+    {
+      "name": "chose_hindi",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_on_keys_hindi",
+          "event": "keypress"
+        },
+        {
+          "next": "split_on_speech_hindi",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_hindi_1",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 640,
+          "y": 1500
+        },
+        "hints": "one,1,two,2,three,3,four,4,ek,do,teeen,chaar",
+        "finish_on_key": "#",
+        "say": "आपने हिंदी भाषा का चयन किया है, चुनें कि आप आज आवाज़ के साथ क्या करना चाहते हैं, पीएनआर स्थिति के लिए कृपया एक दबाएं या कहें one , ट्रेन की स्थिति के लिए 2 दबाएं या कहें two, भोजन ऑर्डर के लिए 3 दबाएं या कहें three, 4 दबाएं या कहें four रेलवे स्टेशनों पर हालिया घोषणाएँ",
+        "language": "hi-IN",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 7,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "chose_tamil",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_on_keys_tamil",
+          "event": "keypress"
+        },
+        {
+          "next": "split_on_speech_tamil",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_tamil_1",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 6190,
+          "y": 1450
+        },
+        "hints": "one,1,two,2,three,3,four,4",
+        "finish_on_key": "#",
+        "say": "நீங்கள் தமிழ் மொழியைத் தேர்ந்தெடுத்துள்ளீர்கள், இன்றே ஆவாஸுடன் நீங்கள் என்ன செய்ய விரும்புகிறீர்கள் என்பதைத் தேர்வுசெய்யவும், PNR நிலைக்கு தயவுசெய்து 1 ஐ அழுத்தவும் அல்லது 1 ஐ அழுத்தவும், ரயில் நிலை 2 ஐ அழுத்தவும் அல்லது 2 என்று கூறவும், உணவு ஆர்டருக்கு 3 என்று சொல்லவும் , 4 ஐ அழுத்தவும் அல்லது 4 ஐ அழுத்தவும் ரயில் நிலையங்களில் சமீபத்திய அறிவிப்புகள்",
+        "language": "ta-IN",
+        "stop_gather": true,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "chose_german",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_on_keys_german",
+          "event": "keypress"
+        },
+        {
+          "next": "split_on_speech_german",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_german_1",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 9150,
+          "y": 1580
+        },
+        "hints": "one,two,three,four,1,2,3,4",
+        "finish_on_key": "#",
+        "say": "Sie haben die englische Sprache ausgewählt. Wählen Sie aus, was Sie heute mit Aawaz tun möchten. Für den PNR-Status drücken Sie bitte 1 oder sagen Sie 1, für den Zugstatus drücken Sie 2 oder sagen Sie 2, für die Essensbestellung drücken Sie 3 oder sagen Sie 2, drücken Sie 4 oder sagen Sie 2 für aktuell Ankündigungen auf Bahnhöfen",
+        "language": "de-DE",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "chose_french",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_on_keys_french",
+          "event": "keypress"
+        },
+        {
+          "next": "split_on_speech_french",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_french_1",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 12640,
+          "y": 1440
+        },
+        "hints": "one,two,three,four,1,2,3,4",
+        "finish_on_key": "#",
+        "say": "Vous avez choisi la langue anglaise, veuillez choisir ce que vous voulez faire avec Aawaz aujourd'hui, pour le statut PNR, appuyez sur 1 ou dites 1, pour le statut du train, appuyez sur 2 ou dites 2, pour commander de la nourriture, appuyez sur 3 ou dites 3. Pour la gare récente annonces, appuyez sur 4 ou dites 4",
+        "language": "fr-FR",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "split_on_keys",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_Invalid_Input_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_english",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_english.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_english",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "2",
+              "arguments": [
+                "{{widgets.chose_english.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "3",
+              "arguments": [
+                "{{widgets.chose_english.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_english",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "4",
+              "arguments": [
+                "{{widgets.chose_english.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_english.Digits}}",
+        "offset": {
+          "x": -2940,
+          "y": 1920
+        }
+      }
+    },
+    {
+      "name": "Invalid_Input_English",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_english",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": -4070,
+          "y": 2550
+        },
+        "loop": 1,
+        "say": "Input was invalid, please press a valid key",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "gather_pnr_english",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "function_2",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_function_2",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_English",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "play": "https://grullo-camel-7793.twil.io/assets/1.1.mp3",
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": -3140,
+          "y": 2630
+        },
+        "hints": "PNR status, PNR",
+        "finish_on_key": "#",
+        "language": "en-IN",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 10,
+        "speech_timeout": "10",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "pnr_status_english",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_english",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Raveena",
+        "offset": {
+          "x": -3420,
+          "y": 3360
+        },
+        "loop": 1,
+        "say": "{{widgets.function_2.parsed.englishMessage}}",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "function_2",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "pnr_status_english",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_English",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZSf3231f02bab71aa55b83ac890c0c0db3",
+        "environment_sid": "ZEab7161eacff7e72e2a8e6fe8c344b745",
+        "offset": {
+          "x": -3350,
+          "y": 2990
+        },
+        "function_sid": "ZH423d0d8502935148a256d70fc54d17db",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_english.Digits}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.function_2.responseObject.message}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-7389.twil.io/CheckPNRStatusFunction"
+      }
+    },
+    {
+      "name": "gather_trainNo_english",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "live_train_function_eng",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_live_train_function_eng",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_English",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "play": "https://grullo-camel-7793.twil.io/assets/1.2.mp3",
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": -2460,
+          "y": 2610
+        },
+        "hints": "train status, train, live train, live train status",
+        "finish_on_key": "#",
+        "language": "en-IN",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 5,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "live_train_function_eng",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "live_train_status_english",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_English",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS5c85e1c3f8317df36f1d08c80c82789c",
+        "environment_sid": "ZE77f4c19fa42e6e2982c02b4b155fb6dd",
+        "offset": {
+          "x": -2640,
+          "y": 2960
+        },
+        "function_sid": "ZH12e206fabd0f901d54dec4d87cbcfff5",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_english.Digits}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_eng.responseObject.englishMessage}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-5435.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "live_train_status_english",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_english",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Raveena",
+        "offset": {
+          "x": -2660,
+          "y": 3350
+        },
+        "loop": 1,
+        "say": "{{widgets.live_train_function_eng.parsed.englishMessage}}",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "chose_ecatering_or_recent_ancmts",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_7",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_split_7",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_English",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Raveena",
+        "offset": {
+          "x": -2000,
+          "y": 2650
+        },
+        "hints": "Food Order, food, irctc e cetering, irctc catering, catering",
+        "finish_on_key": "#",
+        "say": "Press 1 or say one to connect with IRCTC online catering services",
+        "language": "en-IN",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "split_7",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_English",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts.Digits}}",
+        "offset": {
+          "x": -1950,
+          "y": 2950
+        }
+      }
+    },
+    {
+      "name": "say_play_2",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "split_on_keys",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Raveena",
+        "offset": {
+          "x": -2060,
+          "y": 4140
+        },
+        "loop": 1,
+        "say": "The call hung up or could not connect due to some technical issue, please try again later",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "say_play_3",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "connect_call_to_irctc-ecatering",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Raveena",
+        "offset": {
+          "x": -2000,
+          "y": 3580
+        },
+        "loop": 1,
+        "say": "The call is  {{widgets.connect_call_to_irctc-ecatering.variables.DialCallStatus}}",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "connect_call_to_irctc-ecatering",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "next": "chose_english",
+          "event": "callCompleted"
+        },
+        {
+          "next": "say_play_2",
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -2020,
+          "y": 3840
+        },
+        "caller_id": "{{contact.channel.address}}",
+        "noun": "number",
+        "to": "+91 87678 13912",
+        "timeout": 45
+      }
+    },
+    {
+      "name": "say_play_4",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "say_play_3",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Kajal-Neural",
+        "offset": {
+          "x": -1950,
+          "y": 3290
+        },
+        "loop": 1,
+        "say": "Thank you for calling. We are connecting you now to the Indian Railway's E catering services .Please hold while we connect you.",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "split_Tamil_Speech_Result",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "chose_english",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "English",
+              "arguments": [
+                "{{widgets.gather_input.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "One, 1"
+            }
+          ]
+        },
+        {
+          "next": "chose_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Hindi",
+              "arguments": [
+                "{{widgets.gather_input.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "Two, 2"
+            }
+          ]
+        },
+        {
+          "next": "chose_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Marathi",
+              "arguments": [
+                "{{widgets.gather_input.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "Three, 3, tree"
+            }
+          ]
+        },
+        {
+          "next": "chose_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Tamil",
+              "arguments": [
+                "{{widgets.gather_input.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "Four,4,fore"
+            }
+          ]
+        },
+        {
+          "next": "chose_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "German",
+              "arguments": [
+                "{{widgets.gather_input.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "FIve, 5"
+            }
+          ]
+        },
+        {
+          "next": "chose_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "French",
+              "arguments": [
+                "{{widgets.gather_input.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "Six, 6"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.gather_input.SpeechResult}}",
+        "offset": {
+          "x": 4900,
+          "y": 160
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Invalid_Input_1",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_english",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": -3750,
+          "y": 1410
+        },
+        "loop": 1,
+        "say": "Input was invalid, please press a valid key",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "split_on_speech",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_Invalid_Input_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_english",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "PNR",
+              "arguments": [
+                "{{widgets.chose_english.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one,1"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_english",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Train Status",
+              "arguments": [
+                "{{widgets.chose_english.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "two,2"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Food Order",
+              "arguments": [
+                "{{widgets.chose_english.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "three,3"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_english",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "recent announcements",
+              "arguments": [
+                "{{widgets.chose_english.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "four,4,fore"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_english.SpeechResult}}",
+        "offset": {
+          "x": -2450,
+          "y": 1920
+        }
+      }
+    },
+    {
+      "name": "Copy_of_function_2",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_of_pnr_status_english",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_English",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS5c85e1c3f8317df36f1d08c80c82789c",
+        "environment_sid": "ZE77f4c19fa42e6e2982c02b4b155fb6dd",
+        "offset": {
+          "x": -2980,
+          "y": 2990
+        },
+        "function_sid": "ZH44139ae0abcbdd55a6baef1dc1a857e3",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_english.SpeechResult}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.Copy_of_function_2.responseObject.englishMessage}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-5435.twil.io/CheckPNRStatusFunction"
+      }
+    },
+    {
+      "name": "Copy_of_pnr_status_english",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_english",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Raveena",
+        "offset": {
+          "x": -3010,
+          "y": 3640
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_function_2.parsed. englishMessage}}",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "Copy_of_live_train_function_eng",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_of_live_train_status_english",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_English",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS5c85e1c3f8317df36f1d08c80c82789c",
+        "environment_sid": "ZE77f4c19fa42e6e2982c02b4b155fb6dd",
+        "offset": {
+          "x": -2320,
+          "y": 2960
+        },
+        "function_sid": "ZH12e206fabd0f901d54dec4d87cbcfff5",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_english.SpeechResult}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_eng.responseObject.englishMessage}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-5435.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "Copy_of_live_train_status_english",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_english",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Raveena",
+        "offset": {
+          "x": -2280,
+          "y": 3350
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_live_train_function_eng.parsed.englishMessage}}",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "Copy_of_split_7",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_English",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "IRCTC E-Catering",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one, 1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts.SpeechResult}}",
+        "offset": {
+          "x": -1630,
+          "y": 2960
+        }
+      }
+    },
+    {
+      "name": "split_on_keys_hindi",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_hindi_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_hindi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "2",
+              "arguments": [
+                "{{widgets.chose_hindi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "3",
+              "arguments": [
+                "{{widgets.chose_hindi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "4",
+              "arguments": [
+                "{{widgets.chose_hindi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_hindi.Digits}}",
+        "offset": {
+          "x": 260,
+          "y": 1990
+        }
+      }
+    },
+    {
+      "name": "split_on_speech_hindi",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_hindi_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "पीएनआर",
+              "arguments": [
+                "{{widgets.chose_hindi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one,1,ek"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "ट्रेन स्थिति",
+              "arguments": [
+                "{{widgets.chose_hindi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "two,2,do"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "भोजन का ऑर्डर",
+              "arguments": [
+                "{{widgets.chose_hindi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "three,3,teeen"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "घोषणाएं",
+              "arguments": [
+                "{{widgets.chose_hindi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "four,4,chaar,fore"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_hindi.SpeechResult}}",
+        "offset": {
+          "x": 770,
+          "y": 1990
+        }
+      }
+    },
+    {
+      "name": "Invalid_Input_hindi_1",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_hindi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": -330,
+          "y": 1540
+        },
+        "loop": 1,
+        "say": "Input was invalid, please press a valid key",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "gather_pnr_hindi",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "function_2_hindi",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_function_2_hindi",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "play": "https://grullo-camel-7793.twil.io/assets/3.1.mp3",
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 220,
+          "y": 2680
+        },
+        "hints": "PNR status, PNR",
+        "finish_on_key": "#",
+        "language": "en-IN",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 10,
+        "speech_timeout": "10",
+        "loop": 1,
+        "gather_language": "hi-IN"
+      }
+    },
+    {
+      "name": "gather_trainNo_hindi",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "live_train_function_hindi",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_live_train_function_hindi",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "play": "https://grullo-camel-7793.twil.io/assets/3.2.mp3",
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 740,
+          "y": 2690
+        },
+        "hints": "train status, train",
+        "finish_on_key": "#",
+        "language": "en-IN",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 5,
+        "speech_timeout": "10",
+        "loop": 1,
+        "gather_language": "hi-IN"
+      }
+    },
+    {
+      "name": "chose_ecatering_or_recent_ancmts_hindi",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_on_keys_hindi_2",
+          "event": "keypress"
+        },
+        {
+          "next": "split_on_speech_hindi_2",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Kajal-Neural",
+        "offset": {
+          "x": 1340,
+          "y": 2670
+        },
+        "hints": "one,1,ek",
+        "finish_on_key": "#",
+        "say": "आईआरसीटीसी ऑनलाइन खानपान सेवाओं से जुड़ने के लिए एक दबाएं  या one कहें",
+        "language": "hi-IN",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "split_on_keys_hindi_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts_hindi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts_hindi.Digits}}",
+        "offset": {
+          "x": 1240,
+          "y": 3060
+        }
+      }
+    },
+    {
+      "name": "split_on_speech_hindi_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "IRCTC E-Catering",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts_hindi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one,1,ek"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts_hindi.SpeechResult}}",
+        "offset": {
+          "x": 1550,
+          "y": 3070
+        }
+      }
+    },
+    {
+      "name": "Copy_of_live_train_function_hindi",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_of_say_live_train_status_hindi",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 930,
+          "y": 3060
+        },
+        "function_sid": "ZH1001f04215775c90527834415f6046e7",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_hindi.SpeechResult}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_hindi.responseObject.message}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "live_train_function_hindi",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "say_live_train_status_hindi",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 610,
+          "y": 3060
+        },
+        "function_sid": "ZH1001f04215775c90527834415f6046e7",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_hindi.Digits}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_hindi.responseObject.message}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "Copy_of_function_2_hindi",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_pnr_status_hindi",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 290,
+          "y": 3050
+        },
+        "function_sid": "ZH3bcca521c8bdb1b6171410eb89d1f6d0",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_hindi.SpeechResult}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.Copy_of_function_2_hindi.responseObject.message}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckPNRStatus"
+      }
+    },
+    {
+      "name": "function_2_hindi",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "pnr_status_hindi",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": -60,
+          "y": 3060
+        },
+        "function_sid": "ZH3bcca521c8bdb1b6171410eb89d1f6d0",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_hindi.Digits}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.function_2_hindi.responseObject.message}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckPNRStatus"
+      }
+    },
+    {
+      "name": "Invalid_Input_hindi_2",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_hindi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": -420,
+          "y": 2660
+        },
+        "loop": 1,
+        "say": "इनपुट अमान्य था, कृपया वैध कुंजी दबाएँ",
+        "language": "hi-IN"
+      }
+    },
+    {
+      "name": "pnr_status_hindi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_hindi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 0,
+          "y": 3460
+        },
+        "loop": 1,
+        "say": "{{widgets.function_2_hindi.parsed.hindiMessage}}",
+        "language": "hi-IN"
+      }
+    },
+    {
+      "name": "Copy_pnr_status_hindi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_hindi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Raveena",
+        "offset": {
+          "x": 390,
+          "y": 3830
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_function_2_hindi.parsed.hindiMessage}}",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "say_live_train_status_hindi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_hindi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 620,
+          "y": 3470
+        },
+        "loop": 1,
+        "say": "{{widgets.live_train_function_hindi.parsed.hindiMessage}}",
+        "language": "hi-IN"
+      }
+    },
+    {
+      "name": "Copy_of_say_live_train_status_hindi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_hindi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 940,
+          "y": 3430
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_live_train_function_hindi.parsed.hindiMessage}}",
+        "language": "hi-IN"
+      }
+    },
+    {
+      "name": "say_play_4_hindi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "say_play_3_hindi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 1460,
+          "y": 3460
+        },
+        "loop": 1,
+        "say": "कॉल करने के लिए धन्यवा। अब हम आपको भारतीय रेलवे की ई-कैटरिंग सेवाओं से जोड़ रहे हैं। जब तक हम आपको जोड़ रहे हैं, कृपया रुकें।",
+        "language": "hi-IN"
+      }
+    },
+    {
+      "name": "say_play_3_hindi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "connect_call_to_irctc-ecatering_hindi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 1480,
+          "y": 3740
+        },
+        "loop": 1,
+        "say": "कॉल कनेक्ट हो रही है",
+        "language": "hi-IN"
+      }
+    },
+    {
+      "name": "connect_call_to_irctc-ecatering_hindi",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "next": "chose_hindi",
+          "event": "callCompleted"
+        },
+        {
+          "next": "say_play_2_hindi",
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 1510,
+          "y": 4050
+        },
+        "caller_id": "{{contact.channel.address}}",
+        "noun": "number",
+        "to": "+91 87678 13912",
+        "timeout": 45
+      }
+    },
+    {
+      "name": "say_play_2_hindi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_hindi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 1490,
+          "y": 4450
+        },
+        "loop": 1,
+        "say": "किसी तकनीकी समस्या के कारण कॉल कट गई या कनेक्ट नहीं हो सकी, कृपया बाद में पुनः प्रयास करें",
+        "language": "hi-IN"
+      }
+    },
+    {
+      "name": "split_on_keys_marathi",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_marathi_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_marathi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "2",
+              "arguments": [
+                "{{widgets.chose_marathi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "3",
+              "arguments": [
+                "{{widgets.chose_marathi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "4",
+              "arguments": [
+                "{{widgets.chose_marathi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_marathi.Digits}}",
+        "offset": {
+          "x": 3070,
+          "y": 1980
+        }
+      }
+    },
+    {
+      "name": "split_on_speech_marathi",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_marathi_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "PNR",
+              "arguments": [
+                "{{widgets.chose_marathi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "One,1,ek"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Train Status",
+              "arguments": [
+                "{{widgets.chose_marathi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "dona,two,2"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Food Order",
+              "arguments": [
+                "{{widgets.chose_marathi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "three,3,tree"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "recent announcements",
+              "arguments": [
+                "{{widgets.chose_marathi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "foure,4,fore"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_marathi.SpeechResult}}",
+        "offset": {
+          "x": 3690,
+          "y": 1990
+        }
+      }
+    },
+    {
+      "name": "Invalid_Input_marathi_2",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_marathi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 2460,
+          "y": 2760
+        },
+        "loop": 1,
+        "say": "इनपुट अवैध होते, कृपया वैध की दाबा",
+        "language": "hi-IN"
+      }
+    },
+    {
+      "name": "gather_pnr_marathi",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "function_2_marathi",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_function_2_marathi",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Google.mr-IN-Standard-B",
+        "offset": {
+          "x": 3070,
+          "y": 2720
+        },
+        "hints": "PNR status, PNR",
+        "finish_on_key": "#",
+        "say": "कृपया तुमचा दहा अंकी पीएनआर क्रमांक टाका",
+        "language": "mr-IN",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 10,
+        "number_of_digits": 10,
+        "speech_timeout": "10",
+        "loop": 1,
+        "gather_language": "mr-IN"
+      }
+    },
+    {
+      "name": "gather_trainNo_marathi",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "live_train_function_marathi",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_live_train_function_marathi",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "play": "https://grullo-camel-7793.twil.io/assets/2.2.mp3",
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 3680,
+          "y": 2700
+        },
+        "hints": "train status, train",
+        "finish_on_key": "#",
+        "language": "en-IN",
+        "stop_gather": false,
+        "speech_model": "phone_call",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 5,
+        "speech_timeout": "10",
+        "loop": 1,
+        "gather_language": "mr-IN"
+      }
+    },
+    {
+      "name": "chose_ecatering_or_recent_ancmts_marathi",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_on_keys_marathi_2",
+          "event": "keypress"
+        },
+        {
+          "next": "split_on_speech_marathi_2",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Raveena",
+        "offset": {
+          "x": 4190,
+          "y": 2730
+        },
+        "hints": "Food Order, food, irctc e cetering, irctc catering, catering",
+        "finish_on_key": "#",
+        "say": "आईआरसीटीसी ऑनलाइन खानपान सेवांशी जोडण्यासाठी एक दाबा",
+        "language": "en-IN",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "function_2_marathi",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "pnr_status_marathi",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 2810,
+          "y": 3070
+        },
+        "function_sid": "ZH3bcca521c8bdb1b6171410eb89d1f6d0",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_marathi.Digits}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.function_2_marathi.responseObject.message}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckPNRStatus"
+      }
+    },
+    {
+      "name": "Copy_of_function_2_marathi",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_pnr_status_marathi",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 3230,
+          "y": 3060
+        },
+        "function_sid": "ZH3bcca521c8bdb1b6171410eb89d1f6d0",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_marathi.SpeechResult}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.Copy_of_function_2_marathi.responseObject.message}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckPNRStatus"
+      }
+    },
+    {
+      "name": "live_train_function_marathi",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "say_live_train_status_marathi",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 3660,
+          "y": 3070
+        },
+        "function_sid": "ZH1001f04215775c90527834415f6046e7",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_marathi.Digits}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_marathi.responseObject.message}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "Copy_of_live_train_function_marathi",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_of_say_live_train_status_marathi",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 3960,
+          "y": 3070
+        },
+        "function_sid": "ZH1001f04215775c90527834415f6046e7",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_marathi.SpeechResult}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_marathi.responseObject.message}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "split_on_keys_marathi_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts_marathi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts_marathi.Digits}}",
+        "offset": {
+          "x": 4320,
+          "y": 3050
+        }
+      }
+    },
+    {
+      "name": "split_on_speech_marathi_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4_marathi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "IRCTC E-Catering",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts_marathi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "food order, food, IRCTC E-catering, E catering, order"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts_marathi.SpeechResult}}",
+        "offset": {
+          "x": 4620,
+          "y": 3040
+        }
+      }
+    },
+    {
+      "name": "pnr_status_marathi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_marathi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 2850,
+          "y": 3410
+        },
+        "loop": 1,
+        "say": "{{widgets.function_2_marathi.parsed.marathiMessage}}",
+        "language": "mr-IN"
+      }
+    },
+    {
+      "name": "Copy_pnr_status_marathi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_marathi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Raveena",
+        "offset": {
+          "x": 3240,
+          "y": 3740
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_function_2_marathi.parsed.marathiMessage}}",
+        "language": "mr-IN"
+      }
+    },
+    {
+      "name": "say_live_train_status_marathi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_marathi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 3650,
+          "y": 3460
+        },
+        "loop": 1,
+        "say": "{{widgets.live_train_function_marathi.parsed.marathiMessage}}",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "Copy_of_say_live_train_status_marathi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_marathi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 3930,
+          "y": 3480
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_live_train_function_marathi.parsed.marathiMessage}}",
+        "language": "mr-IN"
+      }
+    },
+    {
+      "name": "say_play_4_marathi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "say_play_3_marathi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 4290,
+          "y": 3460
+        },
+        "loop": 1,
+        "say": "कॉल केल्याबद्दल धन्यवाद. आता आम्ही तुम्हाला भारतीय रेल्वेच्या ई-कॅटरिंग सेवांशी जोडत आहोत. आम्ही तुम्हाला जोडत असताना कृपया प्रतीक्षा करा.",
+        "language": "mr-IN"
+      }
+    },
+    {
+      "name": "say_play_3_marathi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "connect_call_to_irctc-ecatering_marathi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 4290,
+          "y": 3750
+        },
+        "loop": 1,
+        "say": "कॉल कनेक्ट होत आहे",
+        "language": "mr-IN"
+      }
+    },
+    {
+      "name": "connect_call_to_irctc-ecatering_marathi",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "next": "chose_marathi",
+          "event": "callCompleted"
+        },
+        {
+          "next": "say_play_2_marathi",
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 4290,
+          "y": 4060
+        },
+        "caller_id": "{{contact.channel.address}}",
+        "noun": "number",
+        "to": "+91 87678 13912",
+        "timeout": 45
+      }
+    },
+    {
+      "name": "say_play_2_marathi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_marathi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 4310,
+          "y": 4380
+        },
+        "loop": 1,
+        "say": "कॉल डिस्कनेक्ट झाला किंवा तांत्रिक समस्येमुळे कनेक्ट होऊ शकला नाही, कृपया नंतर पुन्हा प्रयत्न करा",
+        "language": "mr-IN"
+      }
+    },
+    {
+      "name": "Invalid_Input_marathi_1",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_marathi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "offset": {
+          "x": 2740,
+          "y": 1620
+        },
+        "loop": 1,
+        "say": "Input was invalid, please press a valid key",
+        "language": "en-IN"
+      }
+    },
+    {
+      "name": "gather_pnr_tamil",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "function_2_tamil",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_function_2_tamil",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 5840,
+          "y": 2670
+        },
+        "hints": "PNR status, PNR",
+        "finish_on_key": "#",
+        "say": "உங்கள் 10 இலக்க PNR எண்ணை உள்ளிடவும்",
+        "language": "ta-IN",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 10,
+        "speech_timeout": "10",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "Invalid_Input_tamil_2",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_tamil",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 5300,
+          "y": 2520
+        },
+        "loop": 1,
+        "say": "உள்ளீடு தவறானது, சரியான விசையை அழுத்தவும்",
+        "language": "ta-IN"
+      }
+    },
+    {
+      "name": "gather_trainNo_tamil",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "live_train_function_tamil",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_live_train_function_tamil",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 6490,
+          "y": 2660
+        },
+        "hints": "train status, train",
+        "finish_on_key": "#",
+        "say": "உங்கள் ரயில் எண்ணை உள்ளிடவும்",
+        "language": "ta-IN",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 5,
+        "speech_timeout": "10",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "chose_ecatering_or_recent_ancmts_tamil",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_on_keys_tamil_2",
+          "event": "keypress"
+        },
+        {
+          "next": "split_on_speech_tamil_2",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 7200,
+          "y": 2710
+        },
+        "hints": "One,1",
+        "finish_on_key": "#",
+        "say": "IRCTC ஆன்லைன் கேட்டரிங் சேவைகளுடன் இணைக்க 1ஐ அழுத்தவும் அல்லது 1ஐக் கூறவும்",
+        "language": "ta-IN",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "function_2_tamil",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "pnr_status_tamil",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 5660,
+          "y": 3020
+        },
+        "function_sid": "ZH3bcca521c8bdb1b6171410eb89d1f6d0",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_tamil.Digits}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.function_2_tamil.responseObject.message}}",
+            "key": "message"
+          },
+          {
+            "value": "{{widgets.function_2_tamil.responseObject.tamilMessage}}",
+            "key": "tamilMessage"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckPNRStatus"
+      }
+    },
+    {
+      "name": "Copy_of_function_2_tamil",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_pnr_status_tamil",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 6040,
+          "y": 3010
+        },
+        "function_sid": "ZH3bcca521c8bdb1b6171410eb89d1f6d0",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_tamil.SpeechResult}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.Copy_of_function_2_tamil.responseObject.message}}",
+            "key": "message"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckPNRStatus"
+      }
+    },
+    {
+      "name": "live_train_function_tamil",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "say_live_train_status_tamil",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 6450,
+          "y": 3010
+        },
+        "function_sid": "ZH1001f04215775c90527834415f6046e7",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_tamil.Digits}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_tamil.responseObject.message}}",
+            "key": "message"
+          },
+          {
+            "value": "{{widgets.live_train_function_tamil.responseObject.tamilMessage}}",
+            "key": "tamilMessage"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "Copy_of_live_train_function_tamil",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_of_say_live_train_status_tamil",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 6770,
+          "y": 3020
+        },
+        "function_sid": "ZH1001f04215775c90527834415f6046e7",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_tamil.SpeechResult}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_tamil.responseObject.message}}",
+            "key": "message"
+          },
+          {
+            "value": "{{widgets.live_train_function_tamil.responseObject.tamilMessage}}",
+            "key": "tamilMessage"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "split_on_keys_tamil_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts_tamil.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts_tamil.Digits}}",
+        "offset": {
+          "x": 7060,
+          "y": 3010
+        }
+      }
+    },
+    {
+      "name": "split_on_speech_tamil_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "IRCTC E-Catering",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts_tamil.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one,1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts_tamil.SpeechResult}}",
+        "offset": {
+          "x": 7370,
+          "y": 3010
+        }
+      }
+    },
+    {
+      "name": "say_play_4_tamil",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "say_play_3_tamil",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 7410,
+          "y": 3420
+        },
+        "loop": 1,
+        "say": "அழைத்தமைக்கு நன்றி. இங்கே நாங்கள் உங்களை இந்திய இரயில்வேயின் இ-கேட்டரிங் சேவையுடன் இணைக்கிறோம். நாங்கள் உங்களை இணைக்கும் வரை காத்திருக்கவும்.",
+        "language": "ta-IN"
+      }
+    },
+    {
+      "name": "Copy_of_say_live_train_status_tamil",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_tamil",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 6900,
+          "y": 3420
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_live_train_function_tamil.parsed.tamilMessage}}",
+        "language": "ta-IN"
+      }
+    },
+    {
+      "name": "say_live_train_status_tamil",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_tamil",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 6460,
+          "y": 3420
+        },
+        "loop": 1,
+        "say": "{{widgets.live_train_function_tamil.parsed.tamilMessage}}",
+        "language": "ta-IN"
+      }
+    },
+    {
+      "name": "pnr_status_tamil",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_tamil",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 5630,
+          "y": 3410
+        },
+        "loop": 1,
+        "say": "{{widgets.function_2_tamil.parsed.tamilMessage}}",
+        "language": "ta-IN"
+      }
+    },
+    {
+      "name": "Copy_pnr_status_tamil",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_tamil",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 6050,
+          "y": 3770
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_function_2_tamil.parsed.tamilMessage}}",
+        "language": "ta-IN"
+      }
+    },
+    {
+      "name": "say_play_3_tamil",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "connect_call_to_irctc-ecatering_tamil",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 7410,
+          "y": 3710
+        },
+        "loop": 1,
+        "say": "அழைப்பு இணைக்கிறது",
+        "language": "ta-IN"
+      }
+    },
+    {
+      "name": "connect_call_to_irctc-ecatering_tamil",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "next": "chose_tamil",
+          "event": "callCompleted"
+        },
+        {
+          "next": "say_play_2_tamil",
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 7410,
+          "y": 4020
+        },
+        "caller_id": "{{contact.channel.address}}",
+        "noun": "number",
+        "to": "+91 87678 13912",
+        "timeout": 45
+      }
+    },
+    {
+      "name": "say_play_2_tamil",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_tamil",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 7430,
+          "y": 4340
+        },
+        "loop": 1,
+        "say": "அழைப்பு துண்டிக்கப்பட்டது அல்லது தொழில்நுட்பக் கோளாறு காரணமாக இணைக்க முடியவில்லை, பிறக��� முயற்சிக்கவும்.",
+        "language": "ta-IN"
+      }
+    },
+    {
+      "name": "split_on_speech_tamil",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_tamil_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "PNR",
+              "arguments": [
+                "{{widgets.chose_tamil.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one, 1, onru"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Train Status",
+              "arguments": [
+                "{{widgets.chose_tamil.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "two,2"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Food Order",
+              "arguments": [
+                "{{widgets.chose_tamil.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "three,3,tree"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Announcements",
+              "arguments": [
+                "{{widgets.chose_tamil.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "four,4, fore"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_tamil.SpeechResult}}",
+        "offset": {
+          "x": 6500,
+          "y": 1940
+        }
+      }
+    },
+    {
+      "name": "split_on_keys_tamil",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_tamil_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_tamil.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "2",
+              "arguments": [
+                "{{widgets.chose_tamil.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "3",
+              "arguments": [
+                "{{widgets.chose_tamil.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.chose_tamil.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_tamil.Digits}}",
+        "offset": {
+          "x": 5870,
+          "y": 1950
+        }
+      }
+    },
+    {
+      "name": "Invalid_Input_tamil_1",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_tamil",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 5550,
+          "y": 1580
+        },
+        "loop": 1,
+        "say": "உள்ளீடு தவறானது, சரியான விசையை அழுத்தவும்",
+        "language": "ta-IN"
+      }
+    },
+    {
+      "name": "Invalid_Input_german_1",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_german",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 8530,
+          "y": 1610
+        },
+        "loop": 1,
+        "say": "Ungültige Eingabe, bitte versuchen Sie es erneut",
+        "language": "de-DE"
+      }
+    },
+    {
+      "name": "split_on_keys_german",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_german_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_german.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "2",
+              "arguments": [
+                "{{widgets.chose_german.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "3",
+              "arguments": [
+                "{{widgets.chose_german.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "4",
+              "arguments": [
+                "{{widgets.chose_german.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_german.Digits}}",
+        "offset": {
+          "x": 8830,
+          "y": 1940
+        }
+      }
+    },
+    {
+      "name": "split_on_speech_german",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_german_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "PNR",
+              "arguments": [
+                "{{widgets.chose_german.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one,1"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Train Status",
+              "arguments": [
+                "{{widgets.chose_german.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "two,2"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Food Order",
+              "arguments": [
+                "{{widgets.chose_german.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "three,3,tree"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "recent announcements",
+              "arguments": [
+                "{{widgets.chose_german.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "four,4,fore"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_german.SpeechResult}}",
+        "offset": {
+          "x": 9460,
+          "y": 1940
+        }
+      }
+    },
+    {
+      "name": "Invalid_Input_german_2",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_german",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 8140,
+          "y": 2670
+        },
+        "loop": 1,
+        "say": "Ungültige Eingabe, bitte versuchen Sie es erneut",
+        "language": "de-DE"
+      }
+    },
+    {
+      "name": "gather_pnr_german",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "function_2_german",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_function_2_german",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 8820,
+          "y": 2650
+        },
+        "hints": "PNR status, PNR",
+        "finish_on_key": "#",
+        "say": "Bitte geben Sie Ihre 10-stellige PNR-Nummer ein",
+        "language": "de-DE",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 10,
+        "speech_timeout": "10",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "gather_trainNo_german",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "live_train_function_german",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_live_train_function_german",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 9580,
+          "y": 2650
+        },
+        "hints": "train status, train",
+        "finish_on_key": "#",
+        "say": "Bitte geben Sie Ihre Zugnummer ein",
+        "language": "de-DE",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 5,
+        "speech_timeout": "10",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "chose_ecatering_or_recent_ancmts_german",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_on_keys_german_2",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_split_on_speech_german_2",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 10210,
+          "y": 2630
+        },
+        "hints": "one,two,1,2",
+        "finish_on_key": "#",
+        "say": "Drücken Sie 1 oder sagen Sie 1, um eine Verbindung zu den IRCTC E-Catering-Diensten herzustellen. Drücken Sie 2 oder sagen Sie 2, um auf aktuelle Ankündigungen Ihres jeweiligen Bahnhofs basierend auf der Zugnummer zuzugreifen.",
+        "language": "de-DE",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "function_2_german",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "pnr_status_german",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 8620,
+          "y": 3000
+        },
+        "function_sid": "ZH3bcca521c8bdb1b6171410eb89d1f6d0",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_german.Digits}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.function_2_tamil.responseObject.message}}",
+            "key": "message"
+          },
+          {
+            "value": "{{widgets.function_2_tamil.responseObject.tamilMessage}}",
+            "key": "tamilMessage"
+          },
+          {
+            "value": "{{widgets.function_2_german.responseObject.germanMessage}}",
+            "key": "germanMessage"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckPNRStatus"
+      }
+    },
+    {
+      "name": "Copy_of_function_2_german",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_pnr_status_german",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 9000,
+          "y": 2990
+        },
+        "function_sid": "ZH3bcca521c8bdb1b6171410eb89d1f6d0",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_german.SpeechResult}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.Copy_of_function_2_tamil.responseObject.message}}",
+            "key": "message"
+          },
+          {
+            "value": "{{widgets.function_2_german.responseObject.germanMessage}}",
+            "key": "germanMessage"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckPNRStatus"
+      }
+    },
+    {
+      "name": "live_train_function_german",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "say_live_train_status_german",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 9390,
+          "y": 2990
+        },
+        "function_sid": "ZH1001f04215775c90527834415f6046e7",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_german.Digits}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_german.responseObject.englishMessage}}",
+            "key": "message"
+          },
+          {
+            "value": "{{widgets.live_train_function_tamil.responseObject.tamilMessage}}",
+            "key": "tamilMessage"
+          },
+          {
+            "value": "{{widgets.live_train_function_german.responseObject.germanMessage}}",
+            "key": "germanMessage"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "Copy_of_live_train_function_german",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_of_say_live_train_status_german",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 9750,
+          "y": 2990
+        },
+        "function_sid": "ZH1001f04215775c90527834415f6046e7",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_german.SpeechResult}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_german.responseObject.germanMessage}}",
+            "key": "message"
+          },
+          {
+            "value": "{{widgets.live_train_function_tamil.responseObject.tamilMessage}}",
+            "key": "tamilMessage"
+          },
+          {
+            "value": "{{widgets.live_train_function_german.responseObject.germanMessage}}",
+            "key": "germanMessage"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "split_on_keys_german_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts_german.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts_german.Digits}}",
+        "offset": {
+          "x": 10080,
+          "y": 2980
+        }
+      }
+    },
+    {
+      "name": "Copy_of_split_on_speech_german_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4_german",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "IRCTC E-Catering",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts_german.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one,1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts_german.SpeechResult}}",
+        "offset": {
+          "x": 10440,
+          "y": 2960
+        }
+      }
+    },
+    {
+      "name": "pnr_status_german",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_german",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 8610,
+          "y": 3400
+        },
+        "loop": 1,
+        "say": "{{widgets.function_2_german.parsed.germanMessage}}",
+        "language": "de-DE"
+      }
+    },
+    {
+      "name": "say_live_train_status_german",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_german",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 9420,
+          "y": 3400
+        },
+        "loop": 1,
+        "say": "{{widgets.live_train_function_german.parsed.germanMessage}}",
+        "language": "de-DE"
+      }
+    },
+    {
+      "name": "Copy_of_say_live_train_status_german",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_german",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 9860,
+          "y": 3400
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_live_train_function_german.parsed.germanMessage}}",
+        "language": "de-DE"
+      }
+    },
+    {
+      "name": "say_play_4_german",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "say_play_3_german",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 10140,
+          "y": 3400
+        },
+        "loop": 1,
+        "say": "Vielen Dank für den Anruf. Wir verbinden Sie jetzt mit den E-Catering-Diensten der Indian Railway. Bitte warten Sie, während wir Sie verbinden.",
+        "language": "de-DE"
+      }
+    },
+    {
+      "name": "say_play_3_german",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "connect_call_to_irctc-ecatering_german",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 10140,
+          "y": 3690
+        },
+        "loop": 1,
+        "say": "The call is  {{widgets.connect_call_to_irctc-ecatering_german.DialCallStatus}}",
+        "language": "de-DE"
+      }
+    },
+    {
+      "name": "connect_call_to_irctc-ecatering_german",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "next": "chose_german",
+          "event": "callCompleted"
+        },
+        {
+          "next": "say_play_2_german",
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 10140,
+          "y": 4000
+        },
+        "caller_id": "{{contact.channel.address}}",
+        "noun": "number",
+        "to": "+91 87678 13912",
+        "timeout": 45
+      }
+    },
+    {
+      "name": "say_play_2_german",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_german",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 10160,
+          "y": 4300
+        },
+        "loop": 1,
+        "say": "Der Anruf wurde unterbrochen oder aufgrund eines technischen Problems konnte keine Verbindung hergestellt werden. Bitte versuchen Sie es später erneut",
+        "language": "de-DE"
+      }
+    },
+    {
+      "name": "Copy_pnr_status_german",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_german",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 9000,
+          "y": 3560
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_function_2_german.parsed.germanMessage}}",
+        "language": "de-DE"
+      }
+    },
+    {
+      "name": "Invalid_Input_french_1",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_french",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 11960,
+          "y": 1620
+        },
+        "loop": 1,
+        "say": "Saisie invalide, veuillez appuyer sur une touche valide",
+        "language": "fr-FR"
+      }
+    },
+    {
+      "name": "split_on_keys_french",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_french_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_french.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "2",
+              "arguments": [
+                "{{widgets.chose_french.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "3",
+              "arguments": [
+                "{{widgets.chose_french.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "4",
+              "arguments": [
+                "{{widgets.chose_french.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_french.Digits}}",
+        "offset": {
+          "x": 12260,
+          "y": 1950
+        }
+      }
+    },
+    {
+      "name": "split_on_speech_french",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_french_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_pnr_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "PNR",
+              "arguments": [
+                "{{widgets.chose_french.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one,1"
+            }
+          ]
+        },
+        {
+          "next": "gather_trainNo_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Train Status",
+              "arguments": [
+                "{{widgets.chose_french.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "two,2"
+            }
+          ]
+        },
+        {
+          "next": "chose_ecatering_or_recent_ancmts_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Food Order",
+              "arguments": [
+                "{{widgets.chose_french.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "three,3,tree"
+            }
+          ]
+        },
+        {
+          "next": "chose_recent_ancncmts_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value matches_any_of four,4",
+              "arguments": [
+                "{{widgets.chose_french.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "four,4,fore"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_french.SpeechResult}}",
+        "offset": {
+          "x": 12920,
+          "y": 1980
+        }
+      }
+    },
+    {
+      "name": "Invalid_Input_french_2",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_french",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 11570,
+          "y": 2680
+        },
+        "loop": 1,
+        "say": "Veuillez saisir votre numéro PNR à 10 chiffres",
+        "language": "fr-FR"
+      }
+    },
+    {
+      "name": "gather_pnr_french",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "function_2_french",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_function_2_french",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 12230,
+          "y": 2680
+        },
+        "hints": "PNR status, PNR",
+        "finish_on_key": "#",
+        "say": "Bitte geben Sie Ihre 10-stellige PNR-Nummer ein",
+        "language": "fr-FR",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 10,
+        "speech_timeout": "10",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "gather_trainNo_french",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "live_train_function_french",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_live_train_function_french",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 13010,
+          "y": 2650
+        },
+        "hints": "train status, train",
+        "finish_on_key": "#",
+        "say": "Veuillez saisir votre numéro de train",
+        "language": "fr-FR",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "number_of_digits": 5,
+        "speech_timeout": "10",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "chose_ecatering_or_recent_ancmts_french",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_on_keys_french_2",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_split_on_speech_french_2",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 13760,
+          "y": 2670
+        },
+        "hints": "one,two,1,2",
+        "finish_on_key": "#",
+        "say": "Appuyez sur 1 ou dites 1 pour vous connecter aux services IRCTC E-Catering",
+        "language": "fr-FR",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 15,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "function_2_french",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "pnr_status_french",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 12050,
+          "y": 3010
+        },
+        "function_sid": "ZH3bcca521c8bdb1b6171410eb89d1f6d0",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_french.Digits}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.function_2_tamil.responseObject.message}}",
+            "key": "message"
+          },
+          {
+            "value": "{{widgets.function_2_tamil.responseObject.tamilMessage}}",
+            "key": "tamilMessage"
+          },
+          {
+            "value": "{{widgets.function_2_german.responseObject.germanMessage}}",
+            "key": "germanMessage"
+          },
+          {
+            "value": "{{widgets.function_2_french.responseObject.frenchMessage}}",
+            "key": "frenchMessage"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckPNRStatus"
+      }
+    },
+    {
+      "name": "Copy_of_function_2_french",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_pnr_status_french",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 12430,
+          "y": 3020
+        },
+        "function_sid": "ZH3bcca521c8bdb1b6171410eb89d1f6d0",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_pnr_french.SpeechResult}}",
+            "key": "pnrnumber"
+          },
+          {
+            "value": "{{widgets.Copy_of_function_2_tamil.responseObject.message}}",
+            "key": "message"
+          },
+          {
+            "value": "{{widgets.function_2_german.responseObject.germanMessage}}",
+            "key": "germanMessage"
+          },
+          {
+            "value": "{{widgets.function_2_french.responseObject.frenchMessage}}",
+            "key": "frenchMessage"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckPNRStatus"
+      }
+    },
+    {
+      "name": "live_train_function_french",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "say_live_train_status_french",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 12850,
+          "y": 3000
+        },
+        "function_sid": "ZH1001f04215775c90527834415f6046e7",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_french.Digits}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_german.responseObject.englishMessage}}",
+            "key": "message"
+          },
+          {
+            "value": "{{widgets.live_train_function_tamil.responseObject.tamilMessage}}",
+            "key": "tamilMessage"
+          },
+          {
+            "value": "{{widgets.live_train_function_german.responseObject.germanMessage}}",
+            "key": "germanMessage"
+          },
+          {
+            "value": "{{widgets.live_train_function_french.responseObject.frenchMessage}}",
+            "key": "frenchMessage"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "Copy_of_live_train_function_french",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "Copy_of_say_live_train_status_french",
+          "event": "success"
+        },
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "ZS2e9eeb6cf72108b049a4dbd6f56cc509",
+        "environment_sid": "ZE8b1162ff6654ae73d0f6f421503ece26",
+        "offset": {
+          "x": 13250,
+          "y": 3000
+        },
+        "function_sid": "ZH1001f04215775c90527834415f6046e7",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_trainNo_french.SpeechResult}}",
+            "key": "trainNo"
+          },
+          {
+            "value": "{{widgets.live_train_function_german.responseObject.germanMessage}}",
+            "key": "message"
+          },
+          {
+            "value": "{{widgets.live_train_function_tamil.responseObject.tamilMessage}}",
+            "key": "tamilMessage"
+          },
+          {
+            "value": "{{widgets.live_train_function_german.responseObject.germanMessage}}",
+            "key": "germanMessage"
+          },
+          {
+            "value": "{{widgets.live_train_function_french.responseObject.frenchMessage}}",
+            "key": "frenchMessage"
+          }
+        ],
+        "url": "https://pnr-status-rapid-api-1422.twil.io/CheckLiveTrainStatus"
+      }
+    },
+    {
+      "name": "split_on_keys_french_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts_french.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts_french.Digits}}",
+        "offset": {
+          "x": 13740,
+          "y": 2990
+        }
+      }
+    },
+    {
+      "name": "Copy_of_split_on_speech_french_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_4_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "IRCTC E-Catering",
+              "arguments": [
+                "{{widgets.chose_ecatering_or_recent_ancmts_french.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one,1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_ecatering_or_recent_ancmts_french.SpeechResult}}",
+        "offset": {
+          "x": 14170,
+          "y": 2990
+        }
+      }
+    },
+    {
+      "name": "Copy_pnr_status_french",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_french",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 12430,
+          "y": 3570
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_function_2_french.parsed.frenchMessage}}",
+        "language": "fr-FR"
+      }
+    },
+    {
+      "name": "say_live_train_status_french",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_french",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 12850,
+          "y": 3410
+        },
+        "loop": 1,
+        "say": "{{widgets.live_train_function_french.parsed.frenchMessage}}",
+        "language": "fr-FR"
+      }
+    },
+    {
+      "name": "Copy_of_say_live_train_status_french",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_french",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 13290,
+          "y": 3410
+        },
+        "loop": 1,
+        "say": "{{widgets.Copy_of_live_train_function_french.parsed.frenchMessage}}",
+        "language": "fr-FR"
+      }
+    },
+    {
+      "name": "say_play_4_french",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "say_play_3_french",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 13760,
+          "y": 3400
+        },
+        "loop": 1,
+        "say": "Merci de votre appel. Nous vous connectons désormais aux services de restauration en ligne d'Indian Railway. Veuillez patienter pendant que nous vous connectons.",
+        "language": "fr-FR"
+      }
+    },
+    {
+      "name": "say_play_3_french",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "connect_call_to_irctc-ecatering_french",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 13800,
+          "y": 3700
+        },
+        "loop": 1,
+        "say": "The call is  {{widgets.connect_call_to_irctc-ecatering_french.DialCallStatus}}",
+        "language": "fr-FR"
+      }
+    },
+    {
+      "name": "connect_call_to_irctc-ecatering_french",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "next": "chose_french",
+          "event": "callCompleted"
+        },
+        {
+          "next": "say_play_2_french",
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 13800,
+          "y": 4010
+        },
+        "caller_id": "{{contact.channel.address}}",
+        "noun": "number",
+        "to": "+91 87678 13912",
+        "timeout": 45
+      }
+    },
+    {
+      "name": "say_play_2_french",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_french",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 13820,
+          "y": 4330
+        },
+        "loop": 1,
+        "say": "L'appel a été interrompu ou n'a pas pu être connecté en raison d'un problème technique. Veuillez réessayer plus tard",
+        "language": "fr-FR"
+      }
+    },
+    {
+      "name": "pnr_status_french",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_french",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 12040,
+          "y": 3420
+        },
+        "loop": 1,
+        "say": "{{widgets.function_2_french.parsed.frenchMessage}}",
+        "language": "fr-FR"
+      }
+    },
+    {
+      "name": "chose_recent_ancncmts_tamil",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_1",
+          "event": "keypress"
+        },
+        {
+          "next": "split_2",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Google.ta-IN-Standard-C",
+        "offset": {
+          "x": 7740,
+          "y": 2720
+        },
+        "hints": "One,1",
+        "finish_on_key": "#",
+        "say": "நிலையத்தைப் பற்றிய சமீபத்திய அறிவிப்புகளை அணுக, 1ஐ அழுத்தவும் அல்லது 1 எனக் கூறவும்",
+        "language": "ta-IN",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 5,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "split_1",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "recent_ancmts_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_tamil.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_tamil.Digits}}",
+        "offset": {
+          "x": 7740,
+          "y": 3000
+        }
+      }
+    },
+    {
+      "name": "split_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_tamil_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "recent_ancmts_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Dindigul",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_tamil.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one,1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_tamil.SpeechResult}}",
+        "offset": {
+          "x": 8050,
+          "y": 3000
+        }
+      }
+    },
+    {
+      "name": "recent_ancmts_tamil",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_tamil",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "play": "https://inchworm-caribou-1706.twil.io/assets/tamil_translation.mp3",
+        "offset": {
+          "x": 7950,
+          "y": 3390
+        },
+        "loop": 1
+      }
+    },
+    {
+      "name": "chose_recent_ancncmts_english",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_1_english",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_split_2",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_English",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "speech_timeout": "auto",
+        "offset": {
+          "x": -1310,
+          "y": 2370
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "Press 1 or say one to access the latest updates on the station, available stations are Dindigul",
+        "language": "en-IN",
+        "stop_gather": true,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 5
+      }
+    },
+    {
+      "name": "split_1_english",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_English",
+          "event": "noMatch"
+        },
+        {
+          "next": "recent_ancmts_english",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_english.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_english.Digits}}",
+        "offset": {
+          "x": -1460,
+          "y": 2680
+        }
+      }
+    },
+    {
+      "name": "Copy_of_split_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_English",
+          "event": "noMatch"
+        },
+        {
+          "next": "recent_ancmts_english",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Dindigul",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_english.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one, 1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_english.SpeechResult}}",
+        "offset": {
+          "x": -1020,
+          "y": 2680
+        }
+      }
+    },
+    {
+      "name": "recent_ancmts_english",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_english",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "play": "https://inchworm-caribou-1706.twil.io/assets/english_translation.mp3",
+        "offset": {
+          "x": -1240,
+          "y": 3090
+        },
+        "loop": 1
+      }
+    },
+    {
+      "name": "chose_recent_ancncmts_hindi",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_1_hindi",
+          "event": "keypress"
+        },
+        {
+          "next": "split_2_hindi",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Aditi",
+        "number_of_digits": 6,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 1860,
+          "y": 2490
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "स्टेशन पर नवीनतम अपडेट तक पहुंचने के लिए एक दबाएं या one कहें",
+        "language": "hi-IN",
+        "stop_gather": true,
+        "gather_language": "en-IN",
+        "profanity_filter": "true",
+        "timeout": 5
+      }
+    },
+    {
+      "name": "split_1_hindi",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "recent_ancmts_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_hindi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_hindi.Digits}}",
+        "offset": {
+          "x": 1740,
+          "y": 2830
+        }
+      }
+    },
+    {
+      "name": "split_2_hindi",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_hindi_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "recent_ancmts_hindi",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Dindigul",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_hindi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one, 1, ek"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_hindi.SpeechResult}}",
+        "offset": {
+          "x": 2100,
+          "y": 2830
+        }
+      }
+    },
+    {
+      "name": "recent_ancmts_hindi",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_hindi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "play": "https://inchworm-caribou-1706.twil.io/assets/hindi_translation.mp3\\",
+        "offset": {
+          "x": 2090,
+          "y": 3220
+        },
+        "loop": 1
+      }
+    },
+    {
+      "name": "split_1_marathi",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_recent_ancmts_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_marathi.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_marathi.Digits}}",
+        "offset": {
+          "x": 4750,
+          "y": 2800
+        }
+      }
+    },
+    {
+      "name": "split_2_marathi",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_recent_ancmts_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Dindigul",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_marathi.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "Dindigul,dindigal,one, 1, proceed"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_marathi.SpeechResult}}",
+        "offset": {
+          "x": 5130,
+          "y": 2800
+        }
+      }
+    },
+    {
+      "name": "Copy_of_recent_ancmts_tamil",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_marathi",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "play": "https://inchworm-caribou-1706.twil.io/assets/marathi_translation.mp3",
+        "offset": {
+          "x": 5060,
+          "y": 3150
+        },
+        "loop": 1
+      }
+    },
+    {
+      "name": "chose_recent_ancncmts_marathi",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_1_marathi",
+          "event": "keypress"
+        },
+        {
+          "next": "split_2_marathi",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_marathi_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Google.mr-IN-Standard-A",
+        "offset": {
+          "x": 4810,
+          "y": 2530
+        },
+        "hints": "one,,1",
+        "finish_on_key": "#",
+        "say": "स्टेशनवरील नवीनतम अद्यतनांमध्ये प्रवेश करण्यासाठी एक दाबा किंवा एक  म्हणा",
+        "language": "mr-IN",
+        "stop_gather": true,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 5,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "Copy_2_of_recent_ancmts_tamil",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_german",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "play": "https://inchworm-caribou-1706.twil.io/assets/german_translation.mp3",
+        "offset": {
+          "x": 10910,
+          "y": 3250
+        },
+        "loop": 1
+      }
+    },
+    {
+      "name": "split_2_german",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_2_of_recent_ancmts_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Dindigul",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_german.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one,1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_german.SpeechResult}}",
+        "offset": {
+          "x": 11180,
+          "y": 2890
+        }
+      }
+    },
+    {
+      "name": "split_1_german",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_2_of_recent_ancmts_tamil",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_german.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_german.Digits}}",
+        "offset": {
+          "x": 10800,
+          "y": 2890
+        }
+      }
+    },
+    {
+      "name": "chose_recent_ancncmts_german",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_1_german",
+          "event": "keypress"
+        },
+        {
+          "next": "split_2_german",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_german_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 10930,
+          "y": 2610
+        },
+        "hints": "one,1",
+        "finish_on_key": "#",
+        "say": "Drücken Sie 1 oder sagen Sie 1, um auf die neuesten Senderaktualisierungen zuzugreifen",
+        "language": "de-DE",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 5,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "chose_recent_ancncmts_french",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_1_french",
+          "event": "keypress"
+        },
+        {
+          "next": "split_2_french",
+          "event": "speech"
+        },
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 14610,
+          "y": 2500
+        },
+        "hints": "one,1",
+        "finish_on_key": "#",
+        "say": "Appuyez sur 1 ou dites 1 pour obtenir les dernières annonces des stations",
+        "language": "fr-FR",
+        "stop_gather": true,
+        "speech_model": "default",
+        "profanity_filter": "true",
+        "timeout": 5,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-IN"
+      }
+    },
+    {
+      "name": "split_1_french",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "recent_ancmts_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "1",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_french.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_french.Digits}}",
+        "offset": {
+          "x": 14460,
+          "y": 2780
+        }
+      }
+    },
+    {
+      "name": "split_2_french",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Invalid_Input_french_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "recent_ancmts_french",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Dindigul",
+              "arguments": [
+                "{{widgets.chose_recent_ancncmts_french.SpeechResult}}"
+              ],
+              "type": "matches_any_of",
+              "value": "one,1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.chose_recent_ancncmts_french.SpeechResult}}",
+        "offset": {
+          "x": 14830,
+          "y": 2770
+        }
+      }
+    },
+    {
+      "name": "recent_ancmts_french",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "chose_french",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "play": "https://inchworm-caribou-1706.twil.io/assets/french_translation.mp3",
+        "offset": {
+          "x": 14570,
+          "y": 3140
+        },
+        "loop": 1
+      }
+    }
+  ],
+  "initial_state": "Trigger",
+  "flags": {
+    "allow_concurrent_calls": true
+  }
+}

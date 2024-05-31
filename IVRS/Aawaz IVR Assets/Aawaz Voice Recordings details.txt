@@ -1,0 +1,119 @@
+Aawaz Voice Recordings detail:
+
+Branch 1 Text [ENGLISH]: "Welcome to Aawaz, your onestop solution for overcoming language barriers and experiencing a seamless train travel"
+
+--------------------------------------------------------
+Multi-Lingual options: For english press one, मराठीसाठी दोन दाबा ,हिंदी के लिए तीन दबाएँ, தமிழுக்கு நான்கு அழுத்தவும் , Drücke fünf für Deutsch, appuyez sur six pour le français
+
+
+---------------------------------------------------------
+
+Branch 2 Text [ENGLISH] : "You chose English language, Please choose what you wish to do with Aawaz today, for PNR status please press one, for train status press 2, for food order or recent announcements on the railway stations please press three"
+
+Branch 2 Text [MARATHI] : "तुम्ही मराठी भाषा निवडली आहे, कृपया आज आवाजासोबत तुम्हाला काय करायचे आहे ते निवडा, PNR स्टेटससाठी कृपया एक दाबा, ट्रेन स्टेटससाठी 2 दाबा, फूड ऑर्डर किंवा रेल्वे स्टेशनवरील अलीकडील घोषणांसाठी कृपया तीन दाबा."
+
+Branch 2 Text [HINDI] : "आपने हिंदी भाषा चुनी है, कृपया चुनें कि आप आज आवाज़ के साथ क्या करना चाहते हैं, पीएनआर स्थिति के लिए कृपया एक दबाएं, ट्रेन की स्थिति के लिए 2 दबाएं, भोजन के ऑर्डर या रेलवे स्टेशनों पर हाल की घोषणाओं के लिए कृपया तीन दबाएं।"
+
+Branch 2 Text [TAMIL] : "Branch-2-Tamil.mp3" "நீங்கள் தமிழ் மொழியைத் தேர்ந்தெடுத்துள்ளீர்கள், இன்றே ஆவாஸுடன் நீங்கள் என்ன செய்ய விரும்புகிறீர்கள் என்பதைத் தேர்வுசெய்யவும், PNR நிலைக்கு தயவுசெய்து ஒன்றை அழுத்தவும், ரயில் நிலை அழுத்தத்திற்கு 2, உணவு ஆர்டர் அல்லது ரயில் நிலையங்களில் சமீபத்திய அறிவிப்புகளுக்கு, தயவுசெய்து மூன்றை அழுத்தவும்"
+
+Branch 2 Text [GERMAN] : "Branch-2-German.mp3" "Sie haben die deutsche Sprache gewählt. Bitte wählen Sie aus, was Sie heute mit Aawaz machen möchten. Für den PNR-Status drücken Sie bitte die Eins, für den Zugstatus drücken Sie die 2, für Essensbestellungen oder aktuelle Ankündigungen auf den Bahnhöfen drücken Sie bitte die Drei"
+
+
+Branch 2 Text [FRENCH] : "Branch-2-French" "Vous avez choisi la langue française, veuillez choisir ce que vous souhaitez faire avec Aawaz aujourd'hui, pour le statut PNR, appuyez sur un, pour l'état du train, appuyez sur 2, pour une commande de nourriture ou des annonces récentes sur les gares, appuyez sur trois." 
+
+
+----------------------------------------------------------------------
+----------------------------ENGLISH-----------------------------------
+
+Branch 1.1 text: "Please enter your 10 digit PNR number"
+
+Branch 1.2 text: "Please enter your train number"
+
+Branch 1.3 text: "Please Enter the Railway station unique code"
+
+Branch 1.3.1 text: "We're connecting your call with the food ordering service helpline, please stay on the line"
+
+Branch 1.3.2 text: "The recent announcements for your chosen railway station will be announced in a few moments"
+
+---------------------------------MARATHI--------------------------- 
+
+Branch 2.1 text: "कृपया तुमचा 10 अंकी PNR क्रमांक टाका"
+
+Branch 2.2 text: "कृपया तुमचा ट्रेन नंबर टाका"
+
+Branch 2.3 text: "कृपया रेल्वे स्टेशन अद्वितीय कोड प्रविष्ट करा"
+
+Branch 2.3.1 text: "आम्ही तुमचा कॉल फूड ऑर्डर सेवा हेल्पलाइनशी कनेक्ट करत आहोत, कृपया लाइनवर रहा"
+
+Branch 2.3.2 text: "तुम्ही निवडलेल्या रेल्वे स्टेशनसाठी नवीन घोषणा काही क्षणांत जाहीर केल्या जातील"
+
+
+
+--------------------------------HINDI----------------------------------------
+
+Branch 3.1 text: "कृपया अपना 10 अंकों का पीएनआर नंबर दर्ज करें"
+
+Branch 3.2 text: "कृपया अपना ट्रेन नंबर दर्ज करें"
+
+Branch 3.3 text: "कृपया रेलवे स्टेशन का अद्वितीय कोड दर्ज करें"
+
+Branch 3.3.1 text: "हम आपके कॉल को भोजन ऑर्डरिंग सेवा हेल्पलाइन से जोड़ रहे हैं, कृपया लाइन पर बने रहें"
+
+Branch 3.3.2 text: "आपके चुने हुए रेलवे स्टेशन के लिए हाल की घोषणाएं कुछ ही क्षणों में घोषित की जाएंगी"
+
+
+-------------------------------TAMIL---------------------------------------
+
+
+Branch 4.1 text: "உங்கள் 10 இலக்க PNR எண்ணை உள்ளிடவும்"
+
+Branch 4.2 text: "உங்கள் ரயில் எண்ணை உள்ளிடவும்"
+
+Branch 4.3 text: "ரயில் நிலையத்தின் தனிப்பட்ட குறியீட்டை உள்ளிடவும்"
+
+Branch 4.3.1 text: "உங்கள் அழைப்பை உணவு ஆர்டர் செய்யும் சேவை ஹெல்ப்லைனுடன் இணைக்கிறோம், தயவுசெய்து வரிசையில் இருங்கள்"
+
+Branch 4.3.2 text: "நீங்கள் தேர்ந்தெடுத்த ரயில் நிலையத்திற்கான சமீபத்திய அறிவிப்புகள் சில நிமிடங்களில் அறிவிக்கப்படும்"
+
+
+-------------------------------GERMAN---------------------------------------
+
+Branch 5.1 text: "Bitte geben Sie Ihre 10-stellige PNR-Nummer ein"
+
+Branch 5.2 text: "Bitte geben Sie Ihre Zugnummer ein"
+
+Branch 5.3 text: "Bitte geben Sie den eindeutigen Bahnhofscode ein"
+
+Branch 5.3.1 text: "Wir verbinden Ihren Anruf mit der Hotline für Essensbestellungen, bitte bleiben Sie in der Leitung"
+
+Branch 5.3.2 text: "Die aktuellen Ankündigungen für den von Ihnen gewählten Bahnhof werden in wenigen Augenblicken bekannt gegeben"
+
+-------------------------------FRENCH---------------------------------------
+
+Branch 6.1 text: "Veuillez saisir votre numéro PNR à 10 chiffres"
+
+Branch 6.2 text: "Veuillez saisir votre numéro de train"
+
+Branch 6.3 text: "S’il vous plaît entrer le code unique de la gare"
+
+Branch 6.3.1 text: "Nous connectons votre appel avec la ligne d’assistance du service de commande de nourriture, veuillez rester en ligne"
+
+Branch 6.3.2 text: "Les annonces récentes pour la gare de votre choix seront annoncées dans quelques instants"
+
+
+--------------------------------------------------------------------------
+				<>Invalid Inputs<>
+English: "Invalid Input please try again"
+Marathi: "अवैध इनपुट कृपया पुन्हा प्रयत्न करा"
+Hindi: "अमान्य इनपुट कृपया पुन: प्रयास करें"
+Tamil: "தவறான உள்ளீடு தயவுசெய்து மீண்டும் முயற்சிக்கவும்"
+German: "Ungültige Eingabe, bitte versuchen Sie es erneut"
+French: "Entrée non valide, veuillez réessa qyer"
+
+-------------------------------------------------
+To be recorded yet:
+1] Input was invalid, please press a valid key [English][Hindi][Marathi][Tamil]
+
+2] [All possible languages] Press one to connect with IRCTC E-Catering services, or press two to access recent announcements from your respective railway station based on the train number.
+
+-------------------------------------------------

@@ -1,0 +1,218 @@
+{
+    "description": "A New Flow",
+    "states": [
+      {
+        "name": "Trigger",
+        "type": "trigger",
+        "transitions": [
+          {
+            "next": "choose_station",
+            "event": "incomingMessage"
+          },
+          {
+            "event": "incomingCall"
+          },
+          {
+            "event": "incomingConversationMessage"
+          },
+          {
+            "event": "incomingRequest"
+          },
+          {
+            "event": "incomingParent"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": 10,
+            "y": 10
+          }
+        }
+      },
+      {
+        "name": "choose_station",
+        "type": "send-and-wait-for-reply",
+        "transitions": [
+          {
+            "next": "split_2",
+            "event": "incomingMessage"
+          },
+          {
+            "event": "timeout"
+          },
+          {
+            "event": "deliveryFailure"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": 140,
+            "y": 370
+          },
+          "service": "{{trigger.message.InstanceSid}}",
+          "channel": "{{trigger.message.ChannelSid}}",
+          "from": "+15714896443",
+          "attributes": "{\n  \"name\": \"choose_station\",\n  \"type\": \"send-and-wait-for-reply\",\n  \"transitions\": [\n    {\n      \"next\": \"split_2\",\n      \"event\": \"incomingMessage\"\n    },\n    {\n      \"event\": \"timeout\"\n    },\n    {\n      \"event\": \"deliveryFailure\"\n    }\n  ],\n  \"properties\": {\n    \"offset\": {\n      \"x\": 140,\n      \"y\": 370\n    },\n    \"service\": \"{{trigger.message.InstanceSid}}\",\n    \"channel\": \"{{trigger.message.ChannelSid}}\",\n    \"from\": \"+15714896443\", // Specify the sender's phone number\n    \"message_type\": \"custom\",\n    \"body\": \"Hello! Thanks for contacting us. Please choose the station from the following:\\n1] Dindigul\\n2] Pune\",\n    \"timeout\": \"3600\"\n  }\n}",
+          "message_type": "custom",
+          "body": "Hello thanks for contacting Aawaz services Please Choose the station from the following 1] Dindigul 2] Pune",
+          "timeout": "30"
+        }
+      },
+      {
+        "name": "choose_language",
+        "type": "send-and-wait-for-reply",
+        "transitions": [
+          {
+            "next": "split_1",
+            "event": "incomingMessage"
+          },
+          {
+            "event": "timeout"
+          },
+          {
+            "event": "deliveryFailure"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": 0,
+            "y": 1000
+          },
+          "service": "{{trigger.message.InstanceSid}}",
+          "channel": "{{trigger.message.ChannelSid}}",
+          "from": "{{trigger.message.From}}",
+          "message_type": "custom",
+          "body": "Please Choose your language from the  following:\n1] English\n2] Tamil",
+          "timeout": "3600"
+        }
+      },
+      {
+        "name": "Audio_file_english",
+        "type": "send-message",
+        "transitions": [
+          {
+            "event": "sent"
+          },
+          {
+            "event": "failed"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": -500,
+            "y": 1730
+          },
+          "service": "{{trigger.message.InstanceSid}}",
+          "channel": "{{trigger.message.ChannelSid}}",
+          "from": "{{trigger.message.From}}",
+          "message_type": "custom",
+          "to": "{{trigger.message.From}}",
+          "body": "Please check the recent announcements",
+          "media_url": "https://peach-gull-1097.twil.io/assets/Dindigul_english.mp3"
+        }
+      },
+      {
+        "name": "split_1",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "event": "noMatch"
+          },
+          {
+            "next": "Audio_file_english",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "English",
+                "arguments": [
+                  "{{widgets.choose_station.inbound.Body}}"
+                ],
+                "type": "matches_any_of",
+                "value": "English, eng, Eng, english, english language"
+              }
+            ]
+          },
+          {
+            "next": "Audio_file_tamil",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "Tamil",
+                "arguments": [
+                  "{{widgets.choose_station.inbound.Body}}"
+                ],
+                "type": "matches_any_of",
+                "value": "Tamil, tamil, tamil language"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.choose_station.inbound.Body}}",
+          "offset": {
+            "x": -80,
+            "y": 1270
+          }
+        }
+      },
+      {
+        "name": "Audio_file_tamil",
+        "type": "send-message",
+        "transitions": [
+          {
+            "event": "sent"
+          },
+          {
+            "event": "failed"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": 70,
+            "y": 1730
+          },
+          "service": "{{trigger.message.InstanceSid}}",
+          "channel": "{{trigger.message.ChannelSid}}",
+          "from": "{{trigger.message.From}}",
+          "message_type": "custom",
+          "to": "{{trigger.message.From}}",
+          "body": "Please check the recent announcements",
+          "media_url": "https://peach-gull-1097.twil.io/assets/Dindigul_english.mp3"
+        }
+      },
+      {
+        "name": "split_2",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "event": "noMatch"
+          },
+          {
+            "next": "choose_language",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "Choose station",
+                "arguments": [
+                  "{{widgets.choose_station.inbound.Body}}"
+                ],
+                "type": "matches_any_of",
+                "value": "Dindigul, Dindigul junction, Dindigul station"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.choose_station.inbound.Body}}",
+          "offset": {
+            "x": -170,
+            "y": 720
+          }
+        }
+      }
+    ],
+    "initial_state": "Trigger",
+    "flags": {
+      "allow_concurrent_calls": false
+    }
+  }
